@@ -1,3 +1,5 @@
+  
+pipeline {
 environment {
 registry = "tahmed11/demo"
 registryCredential = 'dockerhub'
@@ -34,4 +36,4 @@ stage('Deploy Image') {
  }
  }
  }
- 
+ }
