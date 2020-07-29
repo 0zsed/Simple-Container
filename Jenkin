@@ -2,7 +2,7 @@
 pipeline {
 environment {
 registry = "reach2johnny/demo"
-registryCredential = 'dockerhub'
+
 dockerImage = ''}
 agent any
 stages {
