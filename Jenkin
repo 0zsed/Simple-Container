@@ -21,7 +21,7 @@ stage('Building image') {
 stage('Container Security Scan') {
  steps {
 
- curl -s https://ci-tools.anchore.io/inline_scan-v0.6.0 | bash -s -- -r reach2johnny/demo
+ sh 'curl -s https://ci-tools.anchore.io/inline_scan-v0.6.0 | bash -s -- -r reach2johnny/demo'
 
 
 }}
