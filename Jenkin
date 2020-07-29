@@ -21,7 +21,7 @@ stage('Building image') {
 stage('Container Security Scan') {
  steps {
  sh '''
- echo "docker.io/tahmed11/demo 'pwd'/Dockerfile" > anchore_images'
+ echo "docker.io/tahmed11/demo 'pwd'/Dockerfile" > anchore_images
  '''
  anchore name: 'anchore_images'}}
 
