@@ -1,7 +1,7 @@
   
 pipeline {
 environment {
-registry = "tahmed11/demo"
+registry = "reach2johnny/demo"
 registryCredential = 'dockerhub'
 dockerImage = ''}
 agent any
@@ -21,7 +21,7 @@ stage('Building image') {
 stage('Container Security Scan') {
  steps {
  sh '''
- echo "docker.io/tahmed11/demo/" > anchore_images
+ echo "docker.io/reach2johnny/demo/" > anchore_images
  '''
  anchore name: 'anchore_images'}}
 
