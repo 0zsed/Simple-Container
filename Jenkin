@@ -19,11 +19,12 @@ stage('Building image') {
  }
  }
 stage('Container Security Scan') {
- steps {
-
-anchore name: 'docker.io/openjdk:8-jre-alpine'
-
-}}
+node {
+def imageLine = 'openjdk:8-jre-alpine'`
+writeFile file: 'anchore_images', text: imageLine`
+anchore name: 'anchore_images'`
+}
+}
 
 
 stage('Deploy Image') {
