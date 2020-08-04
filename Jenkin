@@ -2,6 +2,8 @@
 pipeline {
 environment {
 registry = "reach2johnny/demo"
+def imageLine = 'openjdk:8-jre-alpine'
+writeFile file: 'anchore_images', text: imageLine
 
 dockerImage = ''}
 agent any
@@ -20,8 +22,7 @@ stage('Building image') {
  }
 stage('Container Security Scan') {
 steps {
-def imageLine = 'openjdk:8-jre-alpine'
-writeFile file: 'anchore_images', text: imageLine
+
 anchore name: 'anchore_images'
 }
 }
