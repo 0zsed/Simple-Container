@@ -21,7 +21,7 @@ stage('Building image') {
 stage('Container Security Scan') {
  steps {
 
-anchore name: 'anchore_images'
+anchore name: 'docker.io/openjdk:8-jre-alpine'
 
 }}
 
