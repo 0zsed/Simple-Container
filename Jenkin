@@ -18,7 +18,7 @@ stage('Building image') {
  }
  }
  }
-stages('Container Security Scan') {
+parallel('Container Security Scan') {
 node {
 def imageLine = 'openjdk:8-jre-alpine'
 writeFile file: 'anchore_images', text: imageLine
