@@ -38,5 +38,12 @@ pipeline {
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
+    stage('Pull Image') {
+      steps{
+         script {
+            docker push reach2johnny/app:latest
+          }
+        }
+        }
   }
 }
