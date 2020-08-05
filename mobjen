@@ -1,8 +1,8 @@
 pipeline{
   agent any 
   
-  
-    stages('Analysis'){
+  stages{
+    stage('Analysis'){
     steps{
       script{
         dir(INPUT_LOCATION) {
@@ -30,5 +30,5 @@ pipeline{
         }
       }
     }
-  }
+  }}
 }
