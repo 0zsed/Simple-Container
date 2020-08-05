@@ -13,7 +13,7 @@ pipeline{
           TASK_COLLECTION["Qark"] ={
           sh 'wget "https://raw.githubusercontent.com/linkedin/qark/master/qark/qark.py"'
           sh 'chmod +x qark.py'
-            sh "qark.py --source 1 --apk ${env.INPUT_LOCATION}/${f} --exploit 0"
+            sh "python qark.py --source 1 --apk ${env.INPUT_LOCATION}/${f} --exploit 0"
           }
           TASK_COLLECTION["MOBSF"] ={
            def AUTH_KEY = '26b50122897b1abaedcafad8c30535376b5b681b7cb52111b375036f09efca17'
