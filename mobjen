@@ -27,7 +27,7 @@ pipeline{
           sh 'pip install qark'
            sh "qark --apk ${env.INPUT_LOCATION}/${f}"
           }
-          parallel(TASK_COLLECTION) 
+         
         }
       }
     }
