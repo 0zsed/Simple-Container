@@ -1,8 +1,6 @@
 pipeline {
   agent { any }
-  parameters {
-    string defaultValue: '', description: '', name: 'INPUT_LOCATION', trim: true
-    }
+  
     stage('Analysis') {
     steps {
       script {
