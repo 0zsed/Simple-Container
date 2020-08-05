@@ -53,7 +53,7 @@ pipeline {
                '''
 	       }        
     	}
-  }stage('DAST') {
+  stage('DAST') {
    	 parallel {
    		 stage ('Port Scan') {
 		    steps {
@@ -88,4 +88,4 @@ pipeline {
 		   	 }
 	   	}
 	}
-}
+}}
