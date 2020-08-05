@@ -11,9 +11,8 @@ pipeline{
         files.each { f ->
           def TASK_COLLECTION = [:]
           TASK_COLLECTION["Qark"] ={
-          sh 'wget "https://raw.githubusercontent.com/linkedin/qark/master/qark/qark.py"'
-          sh 'chmod +x qark.py'
-            sh "qark --apk ${env.INPUT_LOCATION}/${f}"
+        
+            sh "qark --apk ${env.INPUT_LOCATION}/${f} -e"
           }
           TASK_COLLECTION["MOBSF"] ={
            def AUTH_KEY = '26b50122897b1abaedcafad8c30535376b5b681b7cb52111b375036f09efca17'
