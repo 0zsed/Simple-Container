@@ -41,7 +41,7 @@ pipeline {
     stage('Pull Image') {
       steps{
          script {
-            sh 'docker pull reach2johnny/app:latest'
+            sh "docker pull $registry:$BUILD_NUMBER"
           }
         }
         }
