@@ -45,5 +45,13 @@ pipeline {
           }
         }
         }
+        stage ('Deploy-To-Tomcat') {
+            steps {
+            sh '''
+               rm -r /opt/tomcat/webapps/WebApp.war || true
+               cp /var/lib/jenkins/workspace/'Container Security'/target/*.war /opt/tomcat/webapps/
+               '''
+	       }        
+    	}
   }
 }
