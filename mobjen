@@ -24,6 +24,7 @@ pipeline{
        sh label: 'Start Scan of Binary', returnStdout: true, script: scan_start_cmd
           }
           TASK_COLLECTION["Qark"] ={
+          sh 'pip install qark'
            sh "qark --apk ${env.INPUT_LOCATION}/${f}"
           }
           parallel(TASK_COLLECTION) 
