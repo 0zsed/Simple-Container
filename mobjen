@@ -2,7 +2,7 @@ pipeline{
   agent any 
   
   
-    stage('Analysis'){
+    stages('Analysis'){
     steps{
       script{
         dir(INPUT_LOCATION) {
