@@ -17,14 +17,14 @@ pipeline {
          sh 'mvn clean package'
        }
     }
-    stage('Building image') {
+    stage('Building Docker') {
       steps{
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
-    stage('Deploy Image') {
+    stage('Push Docker') {
       steps{
          script {
             docker.withRegistry( '', registryCredential ) {
@@ -33,12 +33,12 @@ pipeline {
         }
       }
     }
-    stage('Remove Unused docker image') {
+    stage('Remove Unused Docker') {
       steps{
         sh "docker rmi $registry:$BUILD_NUMBER"
       }
     }
-    stage('Pull Image') {
+    stage('Pull Docker') {
       steps{
          script {
             sh "docker pull $registry:$BUILD_NUMBER"
@@ -53,5 +53,39 @@ pipeline {
                '''
 	       }        
     	}
-  }
+  }stage('DAST') {
+   	 parallel {
+   		 stage ('Port Scan') {
+		    steps {
+			sh 'rm nmap* || true'
+			sh 'docker run --rm -v "$(pwd)":/data uzyexe/nmap -sS -sV -oX nmap 125.16.130.146'
+			sh 'cat nmap'
+		    }
+	    }
+	
+	    stage ('Zap Scan') {
+		  
+		    	steps {
+			      sh 'docker run -t owasp/zap2docker-stable zap-baseline.py -t http://10.201.14.15:8081/WebApp/ || true'
+			    }
+			
+		}    
+	
+	    stage ('Nikto Scan') {
+		    steps {
+			sh 'rm nikto-output.xml || true'
+			sh 'docker pull secfigo/nikto:latest'
+			sh 'docker run secfigo/nikto:latest -h 10.201.14.15 -p 8081 -output /report/nikto-output.xml'
+			 
+		    }
+	    }
+	    
+	    stage ('SSL Checks') {
+		    steps {
+			
+			sh 'cat sslyze-output.json'
+				}
+		   	 }
+	   	}
+	}
 }
