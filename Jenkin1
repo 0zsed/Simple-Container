@@ -12,6 +12,35 @@ pipeline {
         git 'https://github.com/johnsimon007/my-app.git'
       }
     }
+    stage('SAST') {
+    parallel {
+       stage ('Secrets Check') {
+      steps {
+        sh 'rm trufflehog || true'
+        sh 'docker run gesellix/trufflehog --json https://github.com/johnsimon007/Simple-CI-CD-Pipeline.git > trufflehog'
+        sh 'cat trufflehog'
+      }
+    } 
+    stage ('Dependency Check') {
+      steps {
+         sh 'rm owasp* || true'
+         sh 'wget "https://raw.githubusercontent.com/johnsimon007/Simple-CI-CD-Pipeline/master/owasp-dependency-check.sh" '
+         sh 'chmod +x owasp-dependency-check.sh'
+         sh 'bash owasp-dependency-check.sh'
+         sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
+        }
+      }
+     stage ('Secure Code Review') {
+		steps {
+		withSonarQubeEnv('sonar') {
+			sh 'mvn clean install sonar:sonar'
+			sh 'cat target/sonar/report-task.txt'
+		       		}
+			}
+		}
+  	}
+  }
+    
     stage('Build') {
        steps {
          sh 'mvn clean package'
@@ -82,7 +111,8 @@ pipeline {
 	    
 	    stage ('SSL Checks') {
 		    steps {
-			
+			sh 'pip install sslyze==1.4.2'
+			sh 'python -m sslyze --regular 10.201.14.15:8081 --json_out sslyze-output.json'
 			sh 'cat sslyze-output.json'
 				}
 		   	 }
